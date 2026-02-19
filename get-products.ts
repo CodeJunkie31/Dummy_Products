@@ -23,6 +23,15 @@ type DeleteResponse = {
   deletedOn: string
 }
 
+type UpdateProduct = {
+  title?: string
+  description?: string
+  category?: string
+  price?: number
+  discountPercentage?: number
+  rating?: number
+  stock?: number
+}
 type AddResponse = {
 id : number
 
@@ -62,5 +71,21 @@ async function deleteProduct(id: number): Promise<DeleteResponse> {
     throw error;
   }
 }
+
+async function updateProduct(id: number, updates: UpdateProduct) : Promise<Product> {
+try{
+    const response : Response = await fetch(`https://dummyjson.com/products/${id}`,{
+        method: 'PUT',
+      
+    });
+      const data: Product = await response.json();
+      return data;
+    
+    }catch(error){
+       console.error('Error:', error);
+       throw error;
+    }
+}
+
 
 getProducts();
